@@ -46,7 +46,7 @@ double compute_neuron_output (struct net_t *net,
                               int neuron_id)
 {
 // output is firstly equal to this neuron's biais 
-   double coutput = net->biases[neuron_id];
+   double coutput = -net->biases[neuron_id];
 
 //  compute doing the ponderate mean 
    for (int i=0; i <25 ;i++) {
@@ -74,13 +74,17 @@ void train_neuron (struct net_t *net, double alpha,
     /* Update weights if the obtained value is different from the expected. */
     if ( coutput!= training_set->items[item_index]->output[neuron_id]) {
     	for (int i =0; i<25; i++) {
-    		net->weights[i][neuron_id] = net->weights[i][neuron_id] + alpha * training_set->items[item_index]->input[i] * (training_set->items[item_index]->output[neuron_id] - coutput);
+    		net->weights[i][neuron_id] = net->weights[neuron_id][i] + alpha * training_set->items[item_index]->input[i] * (training_set->items[item_index]->output[neuron_id] - coutput);
     }
     
     }
     
       /* Bias update. */
-    /* A COMPLETER */
+   double new_biais=0;
+   for (int i =0; i<25; i++) {  
+   	new_biais= new_biais +	net->weights[neuron_id][i]*training_set->items[item_index]->input[i];
+   } 
+   net->biases[neuron_id]=new_biais;
      
    
   }           /* End of for (int item_index). */
@@ -126,12 +130,12 @@ struct net_t* mk_net (int n_inputs,int p_neurons)
   
   }
   
-  /*net->biases = malloc (p_neurons) ;
+  net->biases = malloc (p_neurons) ;
   for (int i=0; i<p_neurons; i++) {
   	net->biases[i]=0.5;
   }
   
-*/
+
   return net ; 
 }
 
