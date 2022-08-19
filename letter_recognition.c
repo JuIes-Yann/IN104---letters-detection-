@@ -43,8 +43,10 @@ int main ()
 
   printf ("Predictions:\n") ;
   predict (net, ts->items[5]) ;
- 
-
+  predict (net, ts->items[0]) ;
+  predict (net, ts->items[10]) ;
+  predict (net, ts->items[15]) ;
+  predict (net, ts->items[21]) ;
   return 0 ; 
 }
 
