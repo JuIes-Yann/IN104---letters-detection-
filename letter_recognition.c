@@ -20,8 +20,7 @@ int main ()
 #define P_NEURONS (4)
 
   srand (time (NULL)) ;
-  errs_hd = fopen ("tmp/err.log", "wb") ;
-  weights_hd = fopen ("tmp/wei.log", "wb") ;
+  
 			
 			
   printf(" \n Début du programme : OK \n");
@@ -30,16 +29,15 @@ int main ()
   struct net_t *net = mk_net (N_INPUTS, P_NEURONS) ;
   printf(" \n Création du Perceptron : OK \n");
   for (int i = 0; i < 500; i++) {
-    fprintf (errs_hd, "%d ", i) ;
+    
     train_neurons (net, ALPHA, ts) ;
     printf ("Iteration #%d done.\n", i) ;
     print_net (net) ;
     plot_net (net) ;
-    fprintf (errs_hd, "\n") ;
+    
   }
   printf(" \n Session d'entrainement du Perceptron : OK \n");
-  fclose (errs_hd) ;
-  fclose (weights_hd) ;
+  
 
   printf ("Predictions:\n") ;
   predict (net, ts->items[5]) ;
