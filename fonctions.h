@@ -49,7 +49,7 @@ double compute_neuron_output (struct net_t *net,
    double coutput = -net->biases[neuron_id];
 
 //  compute doing the ponderate mean 
-   for (int i=0; i <25 ;i++) {
+   for (int i=0; i <net->n_inputs ;i++) {
 	coutput= coutput +net->weights[i][neuron_id]*training_item->input[i];
   
 }
@@ -116,21 +116,21 @@ struct net_t* mk_net (int n_inputs,int p_neurons)
   
   
   // creating a double dimension table with malloc
-  net->weights = malloc (p_neurons) ;
+  net->weights = malloc (sizeof(double*)*n_inputs) ;
   
-  for (int k=0; k<p_neurons; k++) {
-  	net->weights[k]=malloc(n_inputs);
+  for (int k=0; k<n_inputs; k++) {
+  	net->weights[k]=malloc(sizeof(double)*p_neurons);
   }
   
    // perceptron firstly has 0.5 on all of its coefficients before training
   for (int i=0; i<n_inputs ;i++) {
   	for (int j=0; j<p_neurons;j++) {
-  		net->weights[j][i]=0.5;
+  		net->weights[i][j]=0.5;
   	}
   
   }
   
-  net->biases = malloc (p_neurons) ;
+  net->biases = malloc (sizeof(double)*p_neurons) ;
   for (int i=0; i<p_neurons; i++) {
   	net->biases[i]=0.5;
   }
@@ -228,7 +228,7 @@ struct training_item_t* mk_training_item (const char *data, char expected)
  	else {
  	  ti->input[i]=0;
  	}
- }
+ 	}
    for (int k =0; k<4; k++) {
  	ti->output[k]=0;
  	}	
