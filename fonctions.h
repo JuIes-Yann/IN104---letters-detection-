@@ -34,8 +34,6 @@ struct training_set_t {
 };
 
 
-FILE *weights_hd = NULL ;
-FILE *errs_hd = NULL ;
 
 
 
@@ -60,7 +58,7 @@ double compute_neuron_output (struct net_t *net,
 
 
 /* Trains once one neuron on all the training set items. */
-// Wildrow-Hoff algorithm is used during the training
+// Widrow-Hoff algorithm is used during the training
 void train_neuron (struct net_t *net, double alpha,
                    struct training_set_t *training_set, int neuron_id)
 {
@@ -73,7 +71,7 @@ void train_neuron (struct net_t *net, double alpha,
 
     /* Update weights if the obtained value is different from the expected. */
     if ( coutput!= training_set->items[item_index]->output[neuron_id]) {
-    	for (int i =0; i<25; i++) {
+    	for (int i =0; i<net->n_inputs; i++) {
     		net->weights[i][neuron_id] = net->weights[neuron_id][i] + alpha * training_set->items[item_index]->input[i] * (training_set->items[item_index]->output[neuron_id] - coutput);
     }
     
@@ -84,7 +82,7 @@ void train_neuron (struct net_t *net, double alpha,
    for (int i =0; i<25; i++) {  
    	new_biais= new_biais +	net->weights[neuron_id][i]*training_set->items[item_index]->input[i];
    } 
-   net->biases[neuron_id]=new_biais;
+   net->biases[neuron_id]=new_biais; 
      
    
   }           /* End of for (int item_index). */
@@ -149,8 +147,8 @@ void print_net (struct net_t *net)
   
  // for each neurons
   for (int j=0;j<net->p_neurons;j++) {
-    printf( "\n The biais of neuron n°%d is %f ", j , net->biases[j]);
-    printf(" \n The weights are : ");
+    printf( "\n Le biais du neurone n°%d est %f ", j , net->biases[j]);
+    printf(" \n Les valeurs de poids de ce neurone sont : ");
   	for (int i=0; i< net->n_inputs;i++) {
   	  printf("\n %f ", net->weights[i][j]);
   	
@@ -165,25 +163,7 @@ void print_net (struct net_t *net)
 
 
 
-/* Output of the weights for Gnuplot.
-   Use with:
-     plot 'log.txt' u 1:2 w l, '' u 1:3 w l, '' u 1:4 w l, '' u 1:5 w l, '' u 1:6 w l ; */
-void plot_net (struct net_t *net)
-{
-  static int it_num = 0 ;
 
-  fprintf (weights_hd, "%d ", it_num) ;
-  for (int i = 0; i < net->n_inputs; i++) {
-    for (int j = 0; j < net->p_neurons; j++) {
-      fprintf (weights_hd, "%lf ", net->weights[i][j]) ;
-    }
-  }
-  /* Print biases. */
-  for (int i = 0; i < net->p_neurons; i++)
-    fprintf (weights_hd, "%lf\n", net->biases[i]) ;
-
-  it_num++ ;
-}
 
 
 

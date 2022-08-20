@@ -84,7 +84,7 @@ const char letter_B1[] =
   "**** " ;
   
   
-// Letter C made in diffrent ways.
+// Letter C made in different ways.
 const char letter_C1[] =
   " *** "                                       \
   "*    "                                       \
