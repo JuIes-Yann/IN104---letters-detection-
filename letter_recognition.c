@@ -30,11 +30,12 @@ int main ()
   printf(" \n Création du set d'entrainement : OK \n");
   struct net_t *net = mk_net (N_INPUTS, P_NEURONS) ;
   printf(" \n Création du Perceptron : OK \n");
-  for (int i = 0; i < 150; i++) {
+  for (int i = 0; i < 500; i++) {
     
     train_neurons (net, ALPHA, ts) ;
     printf ("\n Entrainement #%d effectué.\n", i) ;
     print_net (net) ;
+   
    
     
   }
@@ -43,20 +44,30 @@ int main ()
 
   printf ("\nPredictions:\n") ;
   
-  printf ("\n #B ");
+
+  
+  printf ("\n #A \n");
+  
+  ecrire(letter_A1);
+  predict (net, ts->items[0]) ;
+  ecrire(letter_A2);
+  predict (net, ts->items[1]) ;
+  ecrire(letter_A3);
+  predict (net, ts->items[2]) ;
+  ecrire(letter_A4);
+  predict (net, ts->items[3]) ;
+  ecrire(letter_A5);
+  predict (net, ts->items[4]) ;
+  
+ 
+  printf ("\n #Inconnue \n");
+  ecrire(unknown5);
   predict (net, ts->items[5]) ;
   
-  printf ("\n #A ");
-  predict (net, ts->items[0]) ;
-  
-  printf ("\n #C ");
-  predict (net, ts->items[10]) ;
-  
-  printf ("\n #E ");
-  predict (net, ts->items[15]) ;
-  
-  printf ("\n #Inconnue ");
-  predict (net, ts->items[21]) ;
+ 
+ 
+
+
   
   return 0 ; 
 }

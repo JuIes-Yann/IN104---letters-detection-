@@ -77,15 +77,11 @@ void train_neuron (struct net_t *net, double alpha,
     
     }
     
-      /* Bias update. */
-   double new_biais=0;
-   for (int i =0; i<25; i++) {  
-   	new_biais= new_biais +	net->weights[neuron_id][i]*training_set->items[item_index]->input[i];
-   } 
-   net->biases[neuron_id]=new_biais; 
-     
+      /* Bias update.  */
+      
+    net->biases[neuron_id]=net->biases[neuron_id]+(training_set->items[item_index]->output[neuron_id] - coutput);
    
-  }           /* End of for (int item_index). */
+  }           
 }
 
 
@@ -170,6 +166,7 @@ void print_net (struct net_t *net)
 /* Print the score of outputs of the network on an example. */
 void predict (struct net_t *net, struct training_item_t *item)
 {
+  
   char* alphabet="ABCE";
   int indice =-1;
   double valeur=0.5;
@@ -204,10 +201,10 @@ struct training_item_t* mk_training_item (const char *data, char expected)
  	if (data[i]=='*') {
  	  ti->input[i]=1;
  	
- 	}
+ 	  }
  	else {
  	  ti->input[i]=0;
- 	}
+ 	  }
  	}
    for (int k =0; k<4; k++) {
  	ti->output[k]=0;
@@ -241,7 +238,7 @@ struct training_set_t* mk_training_set ()
 {
   struct training_set_t *ts = malloc (sizeof (struct training_set_t)) ;
   
-  ts->nb_items = 25;
+  ts->nb_items = 10;
   ts->items = malloc (sizeof(struct training_item_t)*25) ;
  
 //creating the 25 items
@@ -255,7 +252,7 @@ struct training_set_t* mk_training_set ()
   ts->items[3] = ti4 ;
   struct training_item_t *ti5 = mk_training_item (letter_A5, 'A') ;
   ts->items[4] = ti5 ;
-  
+  /*
   struct training_item_t *ti6 = mk_training_item (letter_B1, 'B') ;
   ts->items[5] = ti6 ;
   struct training_item_t *ti7 = mk_training_item (letter_B2, 'B') ;
@@ -265,8 +262,8 @@ struct training_set_t* mk_training_set ()
   struct training_item_t *ti9 = mk_training_item (letter_B4, 'B') ;
   ts->items[8] = ti9 ;
   struct training_item_t *ti10 = mk_training_item (letter_B5, 'B') ;
-  ts->items[9] = ti10 ;
-  
+  ts->items[9] = ti10 ; 
+   
   struct training_item_t *ti11 = mk_training_item (letter_C1, 'C') ;
   ts->items[10] = ti11 ;
   struct training_item_t *ti12 = mk_training_item (letter_C2, 'C') ;
@@ -287,18 +284,18 @@ struct training_set_t* mk_training_set ()
   struct training_item_t *ti19 = mk_training_item (letter_E4, 'E') ;
   ts->items[18] = ti19 ;
   struct training_item_t *ti20 = mk_training_item (letter_E5, 'E') ;
-  ts->items[19] = ti20 ;
+  ts->items[19] = ti20 ; */
   
   struct training_item_t *ti21 = mk_training_item (unknown1, 'x') ;
-  ts->items[20] = ti21 ;    
+  ts->items[5] = ti21 ;    
   struct training_item_t *ti22 = mk_training_item (unknown2, 'x') ;
-  ts->items[21] = ti22 ; 
+  ts->items[6] = ti22 ; 
   struct training_item_t *ti23 = mk_training_item (unknown3, 'x') ;
-  ts->items[22] = ti23 ; 
+  ts->items[7] = ti23 ; 
   struct training_item_t *ti24 = mk_training_item (unknown4, 'x') ;
-  ts->items[23] = ti24 ; 
+  ts->items[8] = ti24 ; 
   struct training_item_t *ti25 = mk_training_item (unknown5, 'x') ;
-  ts->items[24] = ti25 ; 
+  ts->items[9] = ti25 ;  
 
   
   

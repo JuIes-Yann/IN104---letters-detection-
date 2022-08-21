@@ -194,6 +194,22 @@ const char unknown5[] =
 
 
 
+void ecrire(const char* lettre) {
+  printf("\n");
+  
+  for (int i=0;i<25;i++) {
+    printf("%c",lettre[i]);
+  
+  if ((i+1)%5==0) {
+    printf("\n");
+  } 
+  }
+  printf("\n");
+
+
+
+}
+
 
 
 #endif
